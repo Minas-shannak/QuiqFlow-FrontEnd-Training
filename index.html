@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+</head>
+<body>
+    <div class="dashboard">
+        <header class="header">
+            <div class="header-left">
+                <button class="menu-toggle">☰</button>
+                <h1>LOGO</h1>
+            </div>
+            <div class="header-right">
+                <div class="user-profile">
+                    <i class="fa-solid fa-bell"></i>
+                    <img alt="user profile" title="user profile" src="https://ui-avatars.com/api/?name=u p&amp;background=FFE6A6&amp;bold=true&amp;color=E2B203" class="ui avatar image" style="width: 32px; height: 32px; right: 6px;">
+                </div>
+            </div>
+        </header>
+        
+        <aside class="sidebar">
+            <nav>
+                <ul>
+                    <li class="active"><a href="#"><i class="fa-solid fa-house-chimney"></i> Home</a></li>
+                    <li><a href="#"><i class="fa-solid fa-chart-pie"></i> Analytics</a></li>
+                    <li><a href="#"><i class="fa-solid fa-file-pen"></i> Reports</a></li>
+                    <li><a href="#"><i class="fa-solid fa-envelope"></i> Messages</a></li>
+                    <li><a href="#"><i class="fa-solid fa-gear"></i> Settings</a></li>
+                    <li><a href="#"><i class="fa-solid fa-circle-info"></i> Support</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Users</h3>
+                    <p class="value">1,254</p>
+                    <p class="change positive">↑ 12%</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Revenue</h3>
+                    <p class="value">$8,254</p>
+                    <p class="change positive">↑ 5%</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Conversion</h3>
+                    <p class="value">3.2%</p>
+                    <p class="change negative">↓ 1.2%</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Active Now</h3>
+                    <p class="value">142</p>
+                    <p class="change positive">↑ 3%</p>
+                </div>
+            </div>
+            
+            <div class="charts-container">
+                <div class="chart-card main-chart">
+                    <h3>Performance Overview</h3>
+                    <div class="chart-placeholder">
+                        <canvas id="BarCharts" style="width:100%;max-width:600px"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card pie-chart">
+                    <h3>Traffic Sources</h3>
+                    <canvas id="PieCharts" style="width:100%;max-width:300px"></canvas>
+                </div>
+            </div>
+            
+            <div class="recent-activity">
+                <h3>Recent Activity</h3>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-time">10:30 AM</div>
+                        <div class="activity-desc">New user registration</div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-time">9:45 AM</div>
+                        <div class="activity-desc">System update completed</div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-time">Yesterday</div>
+                        <div class="activity-desc">Monthly report generated</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+
+    
+    <script>
+    var xValues = ["Q1", "Q2", "Q3", "Q4", "Annual Total"];
+    var yValues = [7500, 6000, 3800, 8200, 8500];
+    var barColors = ["red", "green","blue","orange","brown"];
+
+    new Chart("BarCharts", {
+    type: "bar",
+    data: {
+        labels: xValues,
+        datasets: [{
+        backgroundColor: barColors,
+        data: yValues
+        }]
+    },
+    options: {
+        legend: {display: false},
+        title: {
+        display: true,
+        text: ""
+        }
+    }
+    });
+
+
+    new Chart("PieCharts", {
+    type: "pie",
+    data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    title: {
+      display: true,
+      text: ""
+    }
+  }
+});
+
+    </script>
+</body>
+</html>
