@@ -202,15 +202,10 @@ body {
     font-size: var(--section-title-size);
 }
 
-.chart-placeholder {
-    height: 250px;
-    background-color: var(--chart-placeholder);
-    border: 1px dashed var(--chart-border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--placeholder-text);
+.BarCharts , .PieCharts{
+    width: 100%;
 }
+
 
 /* Recent activity */
 .recent-activity {
@@ -252,6 +247,7 @@ body {
     .charts-container {
         grid-template-columns: 1fr;
     }
+
 }
 
 @media (max-width: 768px) {
@@ -260,6 +256,10 @@ body {
         grid-template-areas:
             "header"
             "main";
+    }
+
+    .chart-placeholder {
+        max-width:300px;
     }
     
     .sidebar {

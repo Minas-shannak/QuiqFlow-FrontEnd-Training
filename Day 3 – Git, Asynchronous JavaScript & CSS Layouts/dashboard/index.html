@@ -64,12 +64,14 @@
                 <div class="chart-card main-chart">
                     <h3>Performance Overview</h3>
                     <div class="chart-placeholder">
-                        <canvas id="BarCharts" style="width:100%;max-width:600px"></canvas>
+                        <canvas class="BarCharts" id="BarCharts"></canvas>
                     </div>
                 </div>
                 <div class="chart-card pie-chart">
                     <h3>Traffic Sources</h3>
-                    <canvas id="PieCharts" style="width:100%;max-width:300px"></canvas>
+                    <div class="chart-placeholder">
+                        <canvas class="PieCharts" id="PieCharts" ></canvas>
+                    </div>
                 </div>
             </div>
             
@@ -97,8 +99,8 @@
     
     <!-- bult in code from https://www.w3schools.com -->
     <script>
-    var xValues = ["Q1", "Q2", "Q3", "Q4", "Annual Total"];
-    var yValues = [7500, 6000, 3800, 8200, 8500];
+    var xValues = ["Q1", "Q2", "Q3", "Q4", "Total"];
+    var yValues = [3500, 4000, 2800, 6200, 8500];
     var barColors = ["red", "green","blue","orange","brown"];
 
     new Chart("BarCharts", {
