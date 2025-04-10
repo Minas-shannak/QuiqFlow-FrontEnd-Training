@@ -42,29 +42,28 @@ function displayCards(cards) {
     cards.forEach(card => {
         const cardElement = document.createElement('div');
         cardElement.classList.add('card');
-        
         cardElement.style.border="1px solid #aaa"
-        cardElement.style.padding="10px"
+        cardElement.style.padding="20px"
         cardElement.style.borderRadius="10px"
         cardElement.style.textAlign="center"
 
-        const cardImage = card.imageUrl ? `<img src="${card.imageUrl}" alt="${card.name}">` : '';
+        const cardImage = card.imageUrl ? `<img src="${card.imageUrl}" alt="${card.name}" class="cardimage">` : '';
         const cardTitle = card.name ? `<h3>${card.name}</h3>` : 'Unknown Card';
-        
+        cardElement.innerHTML = `${cardImage}${cardTitle}`;
+
         const img = cardElement.querySelector('img');
         if(img){
             img.style.width = '100%';
             img.style.height = 'auto';
-            img.style.borderRadius = '5px';
+            img.style.borderRadius = '10px';
         }
 
         const h3 = cardElement.querySelector('h3');
         if (h3) {
             h3.style.fontSize = '18px';
-            h3.style.margin = '10px 0';
+            h3.style.margin = '10px';
         }
 
-        cardElement.innerHTML = `${cardImage}${cardTitle}`;
         cardContainer.appendChild(cardElement);
 
         addHoverEffect(cardElement);
@@ -90,10 +89,16 @@ fetchData();
     }
 
     function SelectCard (card) {
+        let isSelected = false;
         card.addEventListener('click', () => {
-            card.style.background = "#f0f0f0";
-            card.style.border = "1px solid #ccc";
-        });     
+            if (!isSelected) {
+                card.style.background = "#afafaf";
+                isSelected = true;
+            } else {
+                card.style.background = "";
+                isSelected = false;
+                }
+        });    
     }
 
 
