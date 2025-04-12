@@ -215,8 +215,26 @@ function applyResponsiveLayout() {
         sidePart.removeAttribute("style");
         sidePartDesktopStyle();
 
+        selectAllButton.style.fontSize = "15px";
+        deselectAllButton.style.fontSize = "15px";
+
+        selectAllButton.style.minWidth = "120px";
+        deselectAllButton.style.minWidth = "120px";
+
+
     }
 }
+
+
+
+window.addEventListener("resize", () => {
+    applyResponsiveLayout();
+    mainContainer.scrollTo(0, 0); 
+});
+
+fetchData();
+applyResponsiveLayout();
+
 
 
 
@@ -253,7 +271,7 @@ function sidePartDesktopStyle() {
         position: "fixed",
         top: "20px",
         flexDirection: "column",
-        height: "95%"
+        height: "95%",
     });
 }
 
@@ -279,11 +297,3 @@ function applyButtonStyle(button, backgroundColor, minWidth = "120px") {
         minWidth: minWidth
     });
 }
-
-window.addEventListener("resize", () => {
-    applyResponsiveLayout();
-    mainContainer.scrollTo(0, 0); 
-});
-
-fetchData();
-applyResponsiveLayout();
