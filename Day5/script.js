@@ -17,26 +17,22 @@ async function fetchData() {
 }
 
 
-let selectedCardIds = JSON.parse(localStorage.getItem("selectedCardIds")) || [];
+let selectedCardIds = JSON.parse(sessionStorage.getItem("selectedCardIds")) || [];
 let missingCard = 0;
 let cardCount = selectedCardIds.length;
 
 const mainContainer = document.createElement("div");
 mainContainer.id = "mainContainer";
-mainContainer.style.margin = "10px 10px 10px 270px";
-mainContainer.style.display = "grid";
-mainContainer.style.gridTemplateColumns = "repeat(4, 1fr)";
-mainContainer.style.gap = "30px";
-mainContainer.style.padding = "20px";
+mainContainerStyle();
 
 const sidePart = document.createElement("div");
 sidePart.classList.add("side-part");
-sidePartStyle();
-sidePart.style.width = "270px";
-sidePart.style.position = "fixed";
-sidePart.style.top = "20px";
-sidePart.style.flexDirection = "column";
-sidePart.style.height = "95%";
+if (window.innerWidth <= 768) {
+    sidePartMobileStyle();
+}else{
+    sidePartDesktopStyle();
+}
+
 
 const sidePartTitle = document.createElement("p");
 sidePartTitle.textContent = `Magic cards`.toUpperCase();
@@ -54,6 +50,7 @@ const deselectAllButton = document.createElement("button");
 deselectAllButton.textContent = "Deselect All";
 applyButtonStyle(deselectAllButton, "#f44336");
 
+
 document.body.appendChild(mainContainer);
 document.body.appendChild(sidePart);
 sidePart.appendChild(sidePartTitle);
@@ -61,7 +58,7 @@ sidePart.appendChild(counterDisplay);
 sidePart.appendChild(selectAllButton);
 sidePart.appendChild(deselectAllButton);
 
-
+// cards
 function displayCards(cards) {
     mainContainer.innerHTML = '';
 
@@ -119,6 +116,8 @@ function displayCards(cards) {
     });
 }
 
+
+// handle select & Deselect
 function SelectCardLogic(button, cardElement, select, cardId) {
     const isCurrentlySelected = button.dataset.selected === "true";
 
@@ -130,7 +129,7 @@ function SelectCardLogic(button, cardElement, select, cardId) {
     
         if (!selectedCardIds.includes(cardId)) {
             selectedCardIds.push(cardId);
-            localStorage.setItem("selectedCardIds", JSON.stringify(selectedCardIds));
+            sessionStorage.setItem("selectedCardIds", JSON.stringify(selectedCardIds));
             cardCount++;
         }
     
@@ -143,7 +142,7 @@ function SelectCardLogic(button, cardElement, select, cardId) {
         const previousLength = selectedCardIds.length;
         selectedCardIds = selectedCardIds.filter(id => id !== cardId);
         if (selectedCardIds.length !== previousLength) {
-            localStorage.setItem("selectedCardIds", JSON.stringify(selectedCardIds));
+            sessionStorage.setItem("selectedCardIds", JSON.stringify(selectedCardIds));
             cardCount--;
         }
     }
@@ -195,25 +194,14 @@ function addHoverEffectToAllButtons() {
     });
 }
 
+// Responsive Layout
 function applyResponsiveLayout() {
-    const screenWidth = window.innerWidth;
-
-    if (screenWidth <= 768) {
+    if (window.innerWidth <= 768) {
         mainContainer.style.gridTemplateColumns = "repeat(2, 1fr)";
         mainContainer.style.margin = "80px 10px 10px 10px";
         
         sidePart.removeAttribute("style");
-        sidePartStyle();
-
-        sidePart.style.position = "fixed";
-        sidePart.style.flexDirection = "row";
-        sidePart.style.top = "0";
-        sidePart.style.left = "0";
-        sidePart.style.width = "auto";
-        sidePart.style.height = "auto";
-        sidePart.style.fontSize = "10px";
-        sidePart.style.margin = "10px";
-        sidePart.style.padding = "10px";
+        sidePartMobileStyle()
 
         selectAllButton.style.fontSize = "10px";
         selectAllButton.style.minWidth = "30px";
@@ -225,34 +213,72 @@ function applyResponsiveLayout() {
         mainContainer.style.margin = "10px 10px 10px 270px";
 
         sidePart.removeAttribute("style");
-        sidePartStyle();
+        sidePartDesktopStyle();
 
-        sidePart.style.width = "270px";
-        sidePart.style.position = "fixed";
-        sidePart.style.top = "20px";
-        sidePart.style.flexDirection = "column";
-        sidePart.style.height = "95%";
     }
 }
 
-    function sidePartStyle() {
-        sidePart.style.display = "flex";
-        sidePart.style.alignItems = "center";
-        sidePart.style.border = "1px solid #aaa";
-        sidePart.style.borderRadius = "10px";
-        sidePart.style.gap = "10px";
-        sidePart.style.background = "white";
-    }
 
-    function applyButtonStyle(button, backgroundColor, minWidth = "120px") {
-        button.style.padding = "10px 20px";
-        button.style.backgroundColor = backgroundColor;
-        button.style.color = "white";
-        button.style.borderRadius = "5px";
-        button.style.border = "none";
-        button.style.cursor = "pointer";
-        button.style.minWidth = minWidth;
-    }
+
+// styles
+function sidePartMobileStyle() {
+    Object.assign(sidePart.style, {
+        display: "flex",
+        alignItems: "center",
+        border: "1px solid #aaa",
+        borderRadius: "10px",
+        gap: "10px",
+        background: "white",
+        position: "fixed",
+        flexDirection: "row",
+        top: "0",
+        left: "0",
+        width: "auto",
+        height: "auto",
+        fontSize: "10px",
+        margin: "10px",
+        padding: "10px"
+    });
+}
+
+function sidePartDesktopStyle() {
+    Object.assign(sidePart.style, {
+        display: "flex",
+        alignItems: "center",
+        border: "1px solid #aaa",
+        borderRadius: "10px",
+        gap: "10px",
+        background: "white",
+        width: "270px",
+        position: "fixed",
+        top: "20px",
+        flexDirection: "column",
+        height: "95%"
+    });
+}
+
+function mainContainerStyle(){
+    Object.assign(mainContainer.style, {
+        margin: "10px 10px 10px 270px",
+        display: "grid",
+        gridTemplateColumns: "repeat(4, 1fr)",
+        gap: "30px",
+        padding: "20px"
+    });
+}
+
+
+function applyButtonStyle(button, backgroundColor, minWidth = "120px") {
+    Object.assign(button.style, {
+        padding: "10px 20px",
+        backgroundColor: backgroundColor,
+        color: "white",
+        borderRadius: "5px",
+        border: "none",
+        cursor: "pointer",
+        minWidth: minWidth
+    });
+}
 
 window.addEventListener("resize", () => {
     applyResponsiveLayout();
