@@ -63,6 +63,7 @@ function displayCards(cards) {
     mainContainer.innerHTML = '';
 
     cards.forEach(card => {
+        
         if (!card.imageUrl) {
             missingCard++;
             return;
@@ -197,7 +198,7 @@ function addHoverEffectToAllButtons() {
 // Responsive Layout
 function applyResponsiveLayout() {
     if (window.innerWidth <= 768) {
-        mainContainer.style.gridTemplateColumns = "repeat(2, 1fr)";
+        mainContainer.style.gridTemplateColumns = "repeat(auto-fit, minmax(200px, 1fr))";
         mainContainer.style.margin = "80px 10px 10px 10px";
         
         sidePart.removeAttribute("style");
@@ -209,7 +210,7 @@ function applyResponsiveLayout() {
         deselectAllButton.style.minWidth = "30px";
 
     } else {
-        mainContainer.style.gridTemplateColumns = "repeat(4, 1fr)";
+        mainContainer.style.gridTemplateColumns = "repeat(auto-fit, minmax(200px, 1fr))";
         mainContainer.style.margin = "10px 10px 10px 270px";
 
         sidePart.removeAttribute("style");
@@ -279,7 +280,7 @@ function mainContainerStyle(){
     Object.assign(mainContainer.style, {
         margin: "10px 10px 10px 270px",
         display: "grid",
-        gridTemplateColumns: "repeat(4, 1fr)",
+        gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
         gap: "30px",
         padding: "20px"
     });
