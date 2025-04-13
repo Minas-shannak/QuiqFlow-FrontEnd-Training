@@ -53,10 +53,12 @@ applyButtonStyle(deselectAllButton, "#f44336");
 
 document.body.appendChild(mainContainer);
 document.body.appendChild(sidePart);
-sidePart.appendChild(sidePartTitle);
-sidePart.appendChild(counterDisplay);
-sidePart.appendChild(selectAllButton);
-sidePart.appendChild(deselectAllButton);
+sidePart.append(
+    sidePartTitle,
+    counterDisplay,
+    selectAllButton,
+    deselectAllButton
+);
 
 // cards
 function displayCards(cards) {
@@ -104,11 +106,13 @@ function displayCards(cards) {
         cardButton.style.transform = "translateX(-50%)";
         applyButtonStyle(cardButton, "#4CAF50", "auto");
 
-        cardElement.appendChild(cardImage);
-        cardElement.appendChild(cardTitle);
-        cardElement.appendChild(cardType);
-        cardElement.appendChild(cardDescription);
-        cardElement.appendChild(cardButton);
+        cardElement.append(
+            cardTitle,
+            cardImage,
+            cardType,
+            cardDescription,
+            cardButton
+        );
         mainContainer.appendChild(cardElement);
 
         SelectCard(cardButton, card.id);
