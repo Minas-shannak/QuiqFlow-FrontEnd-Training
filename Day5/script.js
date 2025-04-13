@@ -64,25 +64,24 @@ function displayCards(cards) {
 
     cards.forEach(card => {
         
-        if (!card.imageUrl) {
-            missingCard++;
-            return;
-        }
-
-        const cardElement = document.createElement('div');
-        cardElement.style.position = "relative";
-        cardElement.style.border = "1px solid #aaa";
-        cardElement.style.padding = "20px";
-        cardElement.style.borderRadius = "10px";
-        cardElement.style.textAlign = "center";
+        // if (!card.imageUrl) {
+        //     missingCard++;
+        //     return;
+        // }
 
         const cardImage = document.createElement('img');
-        cardImage.src = card.imageUrl;
         cardImage.alt = card.name;
         cardImage.classList.add('cardimage');
         cardImage.style.width = '100%';
         cardImage.style.height = 'auto';
         cardImage.style.borderRadius = '10px';
+
+        // cardImage.src =card.imageUrl
+        cardImage.src =card.imageUrl ||'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEoXYrY3nkRpZo3ECGqLIeYOB1esuLmdngbQ&s';
+
+        const cardElement = document.createElement('div');
+        cardElement.id = `card-${card.id}`;
+        CardStyles(cardElement);
 
         const cardTitle = document.createElement('h4');
         cardTitle.textContent = card.name || 'Unknown Card';
@@ -112,14 +111,16 @@ function displayCards(cards) {
         cardElement.appendChild(cardButton);
         mainContainer.appendChild(cardElement);
 
-        SelectCard(cardButton, cardElement, card.id);
+        SelectCard(cardButton, card.id);
         addHoverEffectToAllButtons();
     });
 }
 
 
 // handle select & Deselect
-function SelectCardLogic(button, cardElement, select, cardId) {
+function SelectCardLogic(button, select, cardId) {
+    const cardElement = document.getElementById(`card-${cardId}`);
+    if (!cardElement) return;
     const isCurrentlySelected = button.dataset.selected === "true";
 
     if (select && !isCurrentlySelected) {
@@ -133,7 +134,7 @@ function SelectCardLogic(button, cardElement, select, cardId) {
             sessionStorage.setItem("selectedCardIds", JSON.stringify(selectedCardIds));
             cardCount++;
         }
-    
+
     } else if (!select && isCurrentlySelected) {
         button.textContent = "Select";
         button.style.background = "#4CAF50";
@@ -151,37 +152,38 @@ function SelectCardLogic(button, cardElement, select, cardId) {
     counterDisplay.textContent = `Selected Cards: ${cardCount}`;
 }
 
-function SelectCard(button, cardElement, cardId) {
+
+function SelectCard(button, cardId) {
     if (selectedCardIds.includes(cardId)) {
-        SelectCardLogic(button, cardElement, true, cardId);
+        SelectCardLogic(button, true, cardId);
     } else {
         button.dataset.selected = "false";
     }
 
     button.addEventListener('click', () => {
         const toSelect = button.dataset.selected !== "true";
-        SelectCardLogic(button, cardElement, toSelect, cardId);
+        SelectCardLogic(button, toSelect, cardId);
     });
 }
 
 selectAllButton.addEventListener('click', () => {
     const allButtons = mainContainer.querySelectorAll('.card-select-button');
     allButtons.forEach(button => {
-        const cardElement = button.closest('div');
         const cardId = button.dataset.cardId;
-        SelectCardLogic(button, cardElement, true, cardId);
+        SelectCardLogic(button, true, cardId);
     });
 });
 
 deselectAllButton.addEventListener('click', () => {
     const allButtons = mainContainer.querySelectorAll('.card-select-button');
     allButtons.forEach(button => {
-        const cardElement = button.closest('div');
         const cardId = button.dataset.cardId;
-        SelectCardLogic(button, cardElement, false, cardId);
+        SelectCardLogic(button, false, cardId);
     });
 });
 
+
+// additional effects
 function addHoverEffectToAllButtons() {
     const allButtons = document.querySelectorAll('button');
     allButtons.forEach(button => {
@@ -286,6 +288,15 @@ function mainContainerStyle(){
     });
 }
 
+function CardStyles(cardElement) {
+    Object.assign(cardElement.style, {
+        position: "relative",
+        border: "1px solid #aaa",
+        padding: "20px",
+        borderRadius: "10px",
+        textAlign: "center"
+    });
+}
 
 function applyButtonStyle(button, backgroundColor, minWidth = "120px") {
     Object.assign(button.style, {
