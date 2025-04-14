@@ -76,7 +76,7 @@ function debounce(func, delay) {
 ## ✅ 4. Apply SOLID Principles
 
 **ما هي SOLID؟**  
-٥ مبادئ تصميم تساعد على كتابة كود نظيف وقابل للتوسعة.
+5 مبادئ تصميم تساعد على كتابة كود نظيف وقابل للتوسع
 
 - **S**: Single Responsibility Principle  
   كل كلاس أو دالة تقوم بشيء واحد فقط.
