@@ -1,4 +1,4 @@
-
+# Advanced JavaScript & Code Standards
 # JS Best Practices Summary
 
 🎯 **Main Goal:**  
