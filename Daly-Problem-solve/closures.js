@@ -1,5 +1,5 @@
 // Problem 1:
-/*
+
 function pow(num1){
         return function (num2){
             return Math.pow(num2 , num1);
@@ -10,7 +10,7 @@ var cube = pow(3);
 
 console.log(square(3));
 console.log(cube(3));
-*/
+
 // Problem 2:
 function pingPongTracker(){
     let time=0;
