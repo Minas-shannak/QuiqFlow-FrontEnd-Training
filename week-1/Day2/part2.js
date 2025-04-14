@@ -29,5 +29,5 @@ function createUserProfile(name, location, skills = []){
       function filterByLocation(city) {
         return users.filter(user => user.location.toLowerCase() === city.toLowerCase());
         }
-        const ammanUsers = filterByLocation("Amman").map(user => user.name);
+        const ammanUsers = filterByLocation("Amman").map(user => user.getProfile()+"\n--------");
         console.log(ammanUsers.join("\n"));

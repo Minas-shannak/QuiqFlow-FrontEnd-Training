@@ -18,8 +18,8 @@ async function fetchData() {
 
 
 let selectedCardIds = JSON.parse(sessionStorage.getItem("selectedCardIds")) || [];
-let missingCard = 0;
 let cardCount = selectedCardIds.length;
+let missingCard = 0;
 
 const mainContainer = document.createElement("div");
 mainContainer.id = "mainContainer";
@@ -51,14 +51,14 @@ deselectAllButton.textContent = "Deselect All";
 applyButtonStyle(deselectAllButton, "#f44336");
 
 
-document.body.appendChild(mainContainer);
-document.body.appendChild(sidePart);
 sidePart.append(
     sidePartTitle,
     counterDisplay,
     selectAllButton,
     deselectAllButton
 );
+document.body.appendChild(mainContainer);
+document.body.appendChild(sidePart);
 
 // cards
 function displayCards(cards) {
@@ -78,7 +78,6 @@ function displayCards(cards) {
         cardImage.style.height = 'auto';
         cardImage.style.borderRadius = '10px';
 
-        // cardImage.src =card.imageUrl
         cardImage.src =card.imageUrl ||'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEoXYrY3nkRpZo3ECGqLIeYOB1esuLmdngbQ&s';
 
         const cardElement = document.createElement('div');
@@ -89,13 +88,13 @@ function displayCards(cards) {
         cardTitle.textContent = card.name || 'Unknown Card';
 
         const cardType = document.createElement('p');
-        cardType.style.fontSize = '13px';
         cardType.textContent = `type : ${card.type || 'No description available'}`;
+        cardType.style.fontSize = '13px';
 
         const cardDescription = document.createElement('p');
+        cardDescription.textContent = card.text || 'No description available';
         cardDescription.style.fontSize = '13px';
         cardDescription.style.marginBottom = '40px';
-        cardDescription.textContent = card.text || 'No description available';
 
         const cardButton = document.createElement('button');
         cardButton.classList.add("card-select-button");
@@ -119,6 +118,9 @@ function displayCards(cards) {
         addHoverEffectToAllButtons();
     });
 }
+
+
+
 
 
 // handle select & Deselect
