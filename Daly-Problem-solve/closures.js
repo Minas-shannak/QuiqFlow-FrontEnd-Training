@@ -12,6 +12,7 @@ console.log(square(3));
 console.log(cube(3));
 
 // Problem 2:
+
 function pingPongTracker(){
     let time=0;
     return{
