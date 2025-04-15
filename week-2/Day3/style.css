@@ -1,0 +1,112 @@
+
+:root {
+    /* Colors */
+    --color-primary: #007BFF;
+    --color-primary-hover: #0056b3;
+    --color-light-bg: #fff;
+    --color-dark-bg: #333;
+    --color-light-text: #000;
+    --color-dark-text: #fff;
+    --color-light-header: #f4f4f4;
+    --color-dark-header: #444;
+    --color-card-light: #ccc;
+    --color-card-dark: #555;
+
+    /* Spacing */
+    --spacing-xs: 5px;
+    --spacing-sm: 10px;
+    --spacing-md: 20px;
+    --spacing-lg: 40px;
+
+    /* Typography */
+    --font-family-base: Arial, sans-serif;
+    --font-size-base: 16px;
+    --font-size-lg: 24px;
+}
+
+
+   /* Base Styles (Mobile-First) */
+
+body {
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: var(--color-light-bg);
+    color: var(--color-light-text);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+header {
+    background-color: var(--color-light-header);
+    padding: var(--spacing-sm);
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+    font-size: var(--font-size-lg);
+}
+
+button {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--color-primary);
+    color: var(--color-dark-text);
+    border: none;
+    cursor: pointer;
+    font-size: var(--font-size-base);
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: var(--color-primary-hover);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+}
+
+.item {
+    background-color: var(--color-card-light);
+    padding: var(--spacing-md);
+    text-align: center;
+    border-radius: 5px;
+}
+
+
+   /* Media Queries */
+
+
+/* Tablet */
+@media (min-width: 600px) {
+    .grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+    .grid {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+
+   /* Dark Theme */
+
+body.dark {
+    background-color: var(--color-dark-bg);
+    color: var(--color-dark-text);
+}
+
+body.dark header {
+    background-color: var(--color-dark-header);
+}
+
+body.dark .item {
+    background-color: var(--color-card-dark);
+}

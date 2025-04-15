@@ -197,7 +197,7 @@ const generateCardHTML = (card, counter) => {
 
     const details = createElement('div', {
         style: `
-            background: #000;
+            background: #737373;
             border-top: 1px solid #ccc;
             color: #fff;
             display: none;
