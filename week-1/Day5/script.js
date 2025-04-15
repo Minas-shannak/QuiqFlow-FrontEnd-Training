@@ -8,7 +8,7 @@ async function fetchData() {
 
         const data = await response.json();
         displayCards(data.cards);
-        // console.log(data);
+        console.log(data);
         // console.log(missingCard);
     } catch (error) {
         alert("An error occurred:");
