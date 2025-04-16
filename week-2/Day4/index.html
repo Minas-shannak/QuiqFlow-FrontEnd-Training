@@ -1,0 +1,41 @@
+<!-- Create an animation effect using CSS transitions and keyframes. -->
+<!-- Implement a collapsible section using <details> and <summary> tags. -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animated Collapsible Section</title>
+    <link rel="stylesheet" href='style.css'>
+  </head>
+  <body>
+    <h1 style="text-align: center">Animated Collapsible Section</h1>
+
+    <details>
+      <summary>Click to see animation examples</summary>
+      <div class="content">
+        <h3>CSS Animations Demo</h3>
+
+        <div class="animated-box"></div>
+
+        <p>
+          Hover over the blue box to see a transition effect. 
+        </p>
+        <ul>
+          <li>Transition: Used for hover effects</li>
+          <li>Keyframes: Used for the animations</li>
+        </ul>
+      </div>
+    </details>
+
+    <details open>
+      <summary>Already expanded section</summary>
+      <div class="content">
+        <p>
+          This section is open by default.
+        </p>
+        <p>The background color change uses CSS transition.</p>
+      </div>
+    </details>
+  </body>
+</html>

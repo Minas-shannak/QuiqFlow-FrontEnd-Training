@@ -1,0 +1,90 @@
+:root {
+  --container-width: 80%;
+  --container-max-width: 600px;
+  --container-margin: 20px auto;
+  --font-family: Arial, sans-serif;
+  --border-color: #ddd;
+  --border-radius: 8px;
+
+  --summary-bg: #4caf50;
+  --summary-hover-bg: #45a049;
+  --summary-color: white;
+  --summary-font-size: 1.2em;
+  --summary-font-weight: bold;
+
+  --details-open-bg: #FCF8EE;
+  --content-padding: 15px;
+
+  --box-size: 100px;
+  --box-color: #3498db;
+  --box-hover-color: #29b9a3;
+  --box-radius: 8px;
+}
+
+details {
+  width: var(--container-width);
+  max-width: var(--container-max-width);
+  margin: var(--container-margin);
+  font-family: var(--font-family);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);;
+  transition: all 0.3s ease;
+}
+
+
+summary {
+  padding: var(--content-padding);
+  background-color: var(--summary-bg);
+  color: var(--summary-color);
+  cursor: pointer;
+  font-size: var(--summary-font-size);
+  font-weight: var(--summary-font-weight);
+  outline: none;
+  transition: background-color 0.3s ease;
+}
+
+summary:hover {
+  background-color: var(--summary-hover-bg);
+}
+
+.content {
+  background-color: var(--details-open-bg);
+  padding: var(--content-padding);
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animated-box {
+  width: var(--box-size);
+  height: var(--box-size);
+  background-color: var(--box-color);
+  margin: 20px auto;
+  border-radius: var(--box-radius);
+  transition: all 0.5s ease;
+  animation: 3s ease-in-out 0.5s infinite alternate slideInLeft;
+}
+
+.animated-box:hover {
+  background-color: var(--box-hover-color);
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+

@@ -1,0 +1,89 @@
+<!-- Use different CSS positioning techniques to create a floating action button. -->
+ 
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title aria-label="floating action button">FAB</title>
+    <style>
+      body {
+        height: 2000px;
+      }
+
+      .absolute-fab {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        width: 56px;
+        height: 56px;
+        border-radius: 20%;
+        background-color: #03dac6;
+        color: black;
+        border: none;
+        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        font-size: 24px;
+      }
+
+      .fixed-fab {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 56px;
+        height: 56px;
+        border-radius: 20%;
+        background-color: #6200ee;
+        color: white;
+        border: none;
+        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+
+      .Sticky-fab {
+        position: sticky;
+        float: right;
+        top: calc(100vh - 76px);
+        width: 56px;
+        height: 56px;
+        margin-right: 20px;
+        border-radius: 20%;
+        background-color: #ff4081;
+        color: white;
+        border: none;
+        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        font-size: 24px;
+      }
+
+      button:hover {
+        transform: scale(1.1);
+      }
+    </style>
+  </head>
+  <body>
+    <p>click change button to change the FAB positioning techniques</p>
+    <button id="change">change</button>
+    <button id="FAB" class="absolute-fab">+</button>
+    <p class="display-position">the position is fixed</p>
+
+    <script>
+      const fabClasses = ["fixed-fab", "absolute-fab", "Sticky-fab"];
+      let changingButton = document.getElementById("change");
+      let fabButton = document.getElementById("FAB");
+      let displayPosition = document.querySelector(".display-position");
+      let currentIndex = 0;
+
+      changingButton.addEventListener("click", () => {
+        currentIndex = (currentIndex + 1) % fabClasses.length;
+        fabButton.classList=fabClasses[currentIndex];
+        displayPosition.textContent = `The position is ${fabClasses[currentIndex].replace("-fab", "")}`;
+      });
+    </script>
+  </body>
+</html>
