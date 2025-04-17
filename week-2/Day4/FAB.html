@@ -1,5 +1,5 @@
 <!-- 1 - Use different CSS positioning techniques to create a floating action button. -->
- 
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -7,38 +7,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title aria-label="floating action button">FAB</title>
     <style>
+      :root {
+        --fab-size: 56px;
+        --fab-radius: 20%;
+        --fab-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+        --fab-font-size: 24px;
+        --fab-cursor: pointer;
+        --fab-bottom: 20px;
+        --fab-right: 20px;
+
+        --color-absolute: #03dac6;
+        --color-fixed: #6200ee;
+        --color-sticky: #ff4081;
+      }
+
       body {
         height: 2000px;
       }
 
       .absolute-fab {
         position: absolute;
-        bottom: 20px;
-        right: 20px;
-        width: 56px;
-        height: 56px;
-        border-radius: 20%;
-        background-color: #03dac6;
+        bottom: var(--fab-bottom);
+        right: var(--fab-right);
+        width: var(--fab-size);
+        height: var(--fab-size);
+        border-radius: var(--fab-radius);
+        background-color: var(--color-absolute);
         color: black;
         border: none;
-        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
-        cursor: pointer;
-        font-size: 24px;
+        box-shadow: var(--fab-shadow);
+        cursor: var(--fab-cursor);
+        font-size: var(--fab-font-size);
       }
 
       .fixed-fab {
         position: fixed;
-        bottom: 20px;
-        right: 20px;
-        width: 56px;
-        height: 56px;
-        border-radius: 20%;
-        background-color: #6200ee;
+        bottom: var(--fab-bottom);
+        right: var(--fab-right);
+        width: var(--fab-size);
+        height: var(--fab-size);
+        border-radius: var(--fab-radius);
+        background-color: var(--color-fixed);
         color: white;
         border: none;
-        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
-        cursor: pointer;
-        font-size: 24px;
+        box-shadow: var(--fab-shadow);
+        cursor: var(--fab-cursor);
+        font-size: var(--fab-font-size);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -49,16 +63,16 @@
         position: sticky;
         float: right;
         top: calc(100vh - 76px);
-        width: 56px;
-        height: 56px;
-        margin-right: 20px;
-        border-radius: 20%;
-        background-color: #ff4081;
+        width: var(--fab-size);
+        height: var(--fab-size);
+        margin-right: var(--fab-right);
+        border-radius: var(--fab-radius);
+        background-color: var(--color-sticky);
         color: white;
         border: none;
-        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
-        cursor: pointer;
-        font-size: 24px;
+        box-shadow: var(--fab-shadow);
+        cursor: var(--fab-cursor);
+        font-size: var(--fab-font-size);
       }
 
       button:hover {
@@ -81,7 +95,7 @@
 
       changingButton.addEventListener("click", () => {
         currentIndex = (currentIndex + 1) % fabClasses.length;
-        fabButton.classList=fabClasses[currentIndex];
+        fabButton.classList = fabClasses[currentIndex];
         displayPosition.textContent = `The position is ${fabClasses[currentIndex].replace("-fab", "")}`;
       });
     </script>
