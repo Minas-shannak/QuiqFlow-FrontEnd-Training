@@ -9,33 +9,39 @@
     <link rel="stylesheet" href='style.css'>
   </head>
   <body>
-    <h1 style="text-align: center">Animated Collapsible Section</h1>
-
-    <details>
-      <summary>Click to see animation examples</summary>
-      <div class="content">
-        <h3>CSS Animations Demo</h3>
-
-        <div class="animated-box"></div>
-
-        <p>
-          Hover over the blue box to see a transition effect. 
-        </p>
-        <ul>
-          <li>Transition: Used for hover effects</li>
-          <li>Keyframes: Used for the animations</li>
-        </ul>
-      </div>
-    </details>
-
-    <details open>
-      <summary>Already expanded section</summary>
-      <div class="content">
-        <p>
-          This section is open by default.
-        </p>
-        <p>The background color change uses CSS transition.</p>
-      </div>
-    </details>
-  </body>
+    <main>
+      <header>
+        <h1 style="text-align: center">Animated Collapsible Section</h1>
+      </header>
+  
+      <section aria-labelledby="animationExamplesHeading">
+        <details>
+          <summary id="animationExamplesHeading">Click to see animation examples</summary>
+          <div class="content" role="region" aria-labelledby="animationExamplesHeading">
+            <h3>CSS Animations Demo</h3>
+  
+            <div class="animated-box" aria-label="Blue animated box" tabindex="0"></div>
+  
+            <p>
+              Hover over the blue box to see a transition effect. 
+            </p>
+            <ul>
+              <li>Transition: Used for hover effects</li>
+              <li>Keyframes: Used for the animations</li>
+            </ul>
+          </div>
+        </details>
+      </section>
+  
+      <section aria-labelledby="defaultOpenSection">
+        <details open>
+          <summary id="defaultOpenSection">Already expanded section</summary>
+          <div class="content" role="region" aria-labelledby="defaultOpenSection">
+            <p>This section is open by default.</p>
+            <p>The background color change uses CSS transition.</p>
+          </div>
+        </details>
+      </section>
+    </main>
+  </body>  
 </html>

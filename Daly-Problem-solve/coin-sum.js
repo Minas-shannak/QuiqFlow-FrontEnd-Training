@@ -13,6 +13,31 @@ Example:
 coinCombination(200p) //-> 73682
 */
 
+// my solution
+function coinCombinationRecursive(amount, coins = [1,2,5,10,20,50,100,200]) {
+    let memo = {};
+
+    function countWays(index, remaining) {
+        let key = `${index}-${remaining}`;
+        if (key in memo) return memo[key];
+
+        if (remaining === 0) return 1;
+        if (remaining < 0 || index === coins.length) return 0;
+
+        let include = countWays(index, remaining - coins[index]);
+        let exclude = countWays(index + 1, remaining);
+
+        memo[key] = include + exclude;
+        return memo[key];
+    }
+
+    return countWays(0, amount);
+}
+
+console.log(coinCombinationRecursive(5));
+
+////////////////////////////////////////////////////
+// the beast solution
 function coinCombination(amount){
     let combinations = new Array(amount + 1).fill(0);
     combinations[0] = 1;
@@ -25,4 +50,4 @@ function coinCombination(amount){
                 return combinations[amount];
                 }
 
-                console.log(coinCombination(200));
+                console.log(coinCombination(5));
