@@ -22,39 +22,39 @@
  * through the array? Again: Has the time complexity of your algorithm changed?
  */
 /*
-* Example usage:
-* bubbleSort([2, 1, 3]); // yields [1, 2, 3]
-*
-* Remember to look here http://visualgo.net/sorting
-* */
+ * Example usage:
+ * bubbleSort([2, 1, 3]); // yields [1, 2, 3]
+ *
+ * Remember to look here http://visualgo.net/sorting
+ * */
 
 // my solution
 var a = [34, 203, 3, 746, 200, 984, 198, 764, 9];
 
 function bubbleSort(arr) {
-    let swapped = true;
-  
-    while (swapped) {
-      swapped = false;
-  
-      for (let i = 0; i < arr.length - 1; i++) {
-        if (arr[i] > arr[i + 1]) {
-          [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
-          swapped = true;
-        }
+  let swapped = true;
+
+  while (swapped) {
+    swapped = false;
+
+    for (let i = 0; i < arr.length - 1; i++) {
+      if (arr[i] > arr[i + 1]) {
+        [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
+        swapped = true;
       }
     }
-  
-    return arr;
   }
 
-  console.log(bubbleSort(a));
-  
+  return arr;
+}
+
+console.log(bubbleSort(a));
+
 //   Time Complexity
 //   The time complexity of this algorithm is O(n^2) in the worst case, (when the array is completely reversed)
 //   The time complexity of this algorithm is O(n) in the beast case, ( when the array is already sorted)
 
-
 ////////////////////////////////////////////////////
 
 // the beast solution
+// We can use do { } while() instead of while(), but it has the same time complexity.
