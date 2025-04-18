@@ -21,10 +21,76 @@ const createElement = (tag, attributes = {}, textContent = "") => {
 };
 
 /**
+ * Utility function to create links in the navigation elements dynamically
+ */
+const createNavLinks = (links, ulClassName) => {
+    const ul = createElement('ul', {
+      className: ulClassName
+    });
+  
+    links.forEach(({ text, href, 'aria-label': ariaLabel }) => {
+      const a = createElement('a', {
+        href,
+        'aria-label': ariaLabel,
+        textContent: text
+      });
+  
+      const li = createElement('li');
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+  
+    return ul;
+  };
+  
+/**
+ * Function to create and configure the navigation bar
+ */
+const createNavbar = () => {
+    const nav = createElement('nav', {
+      'aria-label': 'Main Navigation',
+      className: 'navbar'
+    });
+  
+    // const brand = createElement('div', {
+    //   className: 'navbar-brand',
+    //   textContent: 'MTG Cards'
+    // });
+  
+    const hamburger = createElement('div', {
+      className: 'navbar-toggle',
+      'aria-label': 'Toggle navigation',
+      'aria-expanded': 'false',
+      innerHTML: '&#9776;'
+    });
+  
+    const navLinks = [
+        { text: 'Home', href: '#', 'aria-label': 'Home page' },
+        { text: 'Cards', href: '#cards', 'aria-label': 'View cards' },
+        { text: 'About', href: '#about', 'aria-label': 'About this project' },
+        { text: 'Contact', href: '#contact', 'aria-label': 'Contact information' }
+      ];
+    
+      const ul = createNavLinks(navLinks, 'navbar-links');
+  
+    hamburger.addEventListener('click', () => {
+      const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+      hamburger.setAttribute('aria-expanded', !expanded);
+      ul.classList.toggle('open');
+    });
+  
+    // nav.appendChild(brand);
+    nav.appendChild(hamburger);
+    nav.appendChild(ul);
+  
+    return nav;
+  };
+  
+/**
  * Function to create and configure the grid container
  */
 const setupGridContainer = () => {
-  const container =document.getElementById("card-container") || createElement("div", { id: "card-container" });
+  const container =document.getElementById("card-container") || createElement("section", { id: "card-container" , ariaLabel : "Card Grid" });
 
   container.innerHTML = "";
   Object.assign(container.style, {
@@ -41,14 +107,12 @@ const setupGridContainer = () => {
  * Counter with Closure
  */
 const createCounter = (count = 0) => {
-  const counterElement = createElement(
-    "h3",
-    { id: "selected-counter" },
-    `Selected: ${count}`
-  );
+  const counterContainer = createElement("section", {ariaLabel: "Selected Cards Counter"});
+  const counterElement = createElement("h3",{ id: "selected-counter" },`Selected: ${count}`);
+  counterContainer.appendChild(counterElement);
 
   return {
-    getElement: () => counterElement,
+    getElement: () => counterContainer,
     getCount: () => count,
     increment: () => {
       count++;
@@ -174,14 +238,12 @@ const createLoadingSpinner = () => {
  */
 const handleBtnCardClick = (card, wrapper, button, counter) => {
   card.toggleSelection();
-  wrapper.style.backgroundColor = card.isSelected
-    ? "var(--color-card-selected)"
-    : "#fff";
+  wrapper.style.backgroundColor = card.isSelected? "var(--color-card-selected)": "#fff";
   button.setText(card.isSelected ? "Deselect" : "Select");
-  // button.setAttributes({
-  //     'aria-label': card.isSelected ? 'Deselect this card' : 'Select this card',
-  //     'aria-pressed': card.isSelected.toString()
-  // });
+  button.setAttributes({
+      'aria-label': card.isSelected ? 'Deselect this card' : 'Select this card',
+      'aria-pressed': card.isSelected.toString()
+  });
 
   if (card.isSelected) {
     counter.increment();
@@ -259,7 +321,7 @@ class Card {
     const manaCost = createElement("p",{},`Mana Cost: ${this.manaCost || "N/A"}`);
     const powerToughness = createElement("p",{},`P/T: ${this.power || "N/A"} / ${this.toughness || "N/A"}`);
 
-    const details = createElement("section", {
+    const details = createElement("div", {
       style: `
             background: rgba(255, 255, 255, 0.9);
             border-top: 1px solid #ccc;
@@ -340,6 +402,7 @@ class CardList {
       container.appendChild(card.draw());
     });
 
+    const main = document.querySelector("main");
     main.appendChild(container);
   }
 
@@ -370,57 +433,119 @@ class CardList {
 /**
  * Function to set up the main layout of the page
  */
+
 const setupLayout = (cardList, counter) => {
-  const style = document.createElement("style");
-  style.innerHTML = `
-      :root {
-        --color-primary: #007bff;
-        --color-success: #28a745;
-        --color-card-bg: white;
-        --color-card-selected: #d1ffd1;
-        --font-main: 'Arial, sans-serif';
-        --shadow-light: 2px 2px 8px rgba(0, 0, 0, 0.1);
-        --shadow-strong: 4px 4px 12px rgba(0, 0, 0, 0.2);
+    const style = document.createElement("style");
+    style.innerHTML = `
+    :root {
+      --color-primary: #007bff;
+      --color-success: #28a745;
+      --color-card-bg: white;
+      --color-card-selected: #d1ffd1;
+      --shadow-light: 2px 2px 8px rgba(0, 0, 0, 0.1);
+      --shadow-strong: 4px 4px 12px rgba(0, 0, 0, 0.2);
+    }
+  
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+  
+    nav {
+      background-color: var(--color-primary);
+      color: white;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+  
+    nav ul {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 10px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+  
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 10px 0;
+      display: block;
+    }
+    
+    @media (min-width: 600px) {
+      nav {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
       }
-    `;
-  document.head.appendChild(style);
+  
+      nav ul {
+        flex-direction: row;
+        width: auto;
+      }
+  
+      nav ul li a {
+        padding: 0;
+      }
+    }
+  `;
+    document.head.appendChild(style);
+    
+  Object.assign(document.body.style, {
+    fontFamily: 'Arial, sans-serif',
+    margin: 0,
+    padding: 0,
+    });
 
-  //<main>
-  const main = createElement("main", { ariaLabel: "Main Content Area" });
-
-  Object.assign(main.style, {
-    fontFamily: "var(--font-main)",
-    textAlign: "center",
-    margin: "20px",
-  });
-
-  document.body.appendChild(main);
-
-  //<header>
+    // header
   const header = createElement("header", { ariaLabel: "Header Area" });
   Object.assign(header.style, {
-    fontSize: "24px",
-    margin: "10px",
-  });
+      fontSize: "20px",
+      margin: "0",
+      padding: "0",
+    });
 
-  main.appendChild(header);
-  const btnContainer = createElement("div", { style: "margin: 20px;" });
+    //  main
+  const main = createElement("main", { ariaLabel: "Main Content Area" });
+  Object.assign(main.style, {
+    textAlign: 'center',
+    margin: '20px',
+    boxSizing: 'border-box',
+    });
 
-  const selectAllBtn = new Button("Select All", () => cardList.selectAll());
-  const deselectAllBtn = new Button("Deselect All",() => {cardList.deselectAll();},"secondary");
-
-  btnContainer.appendChild(selectAllBtn.getElement());
-  btnContainer.appendChild(deselectAllBtn.getElement());
-  const container = setupGridContainer();
-
-  main.appendChild(counter.getElement());
-  main.appendChild(btnContainer);
-  main.appendChild(container);
+    
+    const btnContainer = createElement("section", { style: "margin: 20px;" });
+    const selectAllBtn = new Button("Select All", () => cardList.selectAll());
+    const deselectAllBtn = new Button("Deselect All",() => {cardList.deselectAll();},"secondary");
+    
+    btnContainer.appendChild(selectAllBtn.getElement());
+    btnContainer.appendChild(deselectAllBtn.getElement());
+    const container = setupGridContainer();
+    
+    document.body.appendChild(header);
+    const navbar = createNavbar();
+    header.appendChild(navbar);
+    
+    document.body.appendChild(main);
+    main.append(
+        counter.getElement(),
+        btnContainer,
+        container
+        );
 };
 
 /**
  * Page Class (Handles page layout and UI setup)
  */
+
 class Page {
   constructor() {
     this.counter = createCounter(0);
