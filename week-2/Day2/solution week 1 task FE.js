@@ -111,7 +111,6 @@ const fetchCards = async (SIZE = 70) => {
     try {
         const response = await fetch(API_URL);
         const data = await response.json();
-        console.log(data);
         return data.cards.slice(0, SIZE).map(card => new Card(card));
     } catch (error) {
         console.error('Error fetching cards:', error);
@@ -197,7 +196,7 @@ const generateCardHTML = (card, counter) => {
 
     const details = createElement('div', {
         style: `
-            background: #737373;
+            background: #000;
             border-top: 1px solid #ccc;
             color: #fff;
             display: none;
