@@ -21,7 +21,7 @@
         --color-success: #28a745;
         --color-card-bg: white;
         --color-card-selected: #d1ffd1;
-        --color-details-bg : #e3e3e3e6;
+        --color-details-bg: #e3e3e3e6;
         --color-card-deselected: #fff;
         --shadow-light: 2px 2px 8px rgba(0, 0, 0, 0.1);
         --shadow-strong: 4px 4px 12px rgba(0, 0, 0, 0.2);
@@ -40,7 +40,29 @@
         --color-card-selected: #333;
         --color-card-dark: #fff;
         --color-card-deselected: #222;
-        --color-details-bg : #333333ee;
+        --color-details-bg: #333333ee;
+      }
+
+      .theme-toggle-button {
+        background-color: var(--color-primary);
+        color: #fff;
+        border: none;
+        border-radius: 20px;
+        padding: 8px 16px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s, transform 0.2s;
+        box-shadow: var(--shadow-light);
+      }
+
+      .theme-toggle-button:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+      }
+
+      .theme-toggle-button:active {
+        background-color: #0056b3;
+        transform: scale(0.95);
       }
 
       /* Navigation bar */
@@ -95,6 +117,36 @@
 
       .nav-link:hover {
         opacity: 0.7;
+      }
+
+      /* Dropdowndrop down menu  */
+      .has-submenu {
+        position: relative;
+      }
+
+      .submenu {
+        display: none;
+        position: absolute;
+        background-color: var(--color-header-bg);
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        top: 100%;
+        left: 0;
+        min-width: 150px;
+        box-shadow: var(--shadow-light);
+        z-index: 10;
+      }
+
+      .submenu li a {
+        padding: 10px;
+        display: block;
+        color: white;
+        text-decoration: none;
+      }
+
+      .has-submenu:hover .submenu {
+        display: block;
       }
 
       /* Desktop Styles */

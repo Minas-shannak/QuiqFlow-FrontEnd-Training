@@ -23,27 +23,38 @@ const createElement = (tag, attributes = {}, textContent = '') => {
  */
 
 const createThemeToggle = () => {
-    let currentTheme = localStorage.getItem("theme") || "light";
+    let currentTheme = localStorage.getItem('theme') || 'light';
   
-    const themeToggleButton = createElement("button", {
-        id: "theme-toggle",
-        style: 'cursor: pointer;',
-        'aria-label': 'Toggle theme',
-      }, "Toggle Theme");
-
-    const initTheme = () => {
-      if (currentTheme === "dark") {
-        document.body.classList.add("dark");
+    const themeToggleButton = createElement('button', {
+      id: 'theme-toggle',
+      className: 'theme-toggle-button',
+      style: 'cursor: pointer;',
+      'aria-label': 'Toggle theme',
+    });
+  
+    const updateButtonText = () => {
+      if (currentTheme === 'dark') {
+        themeToggleButton.textContent = '☀️ Light Mode';
+      } else {
+        themeToggleButton.textContent = '🌙 Dark Mode';
       }
     };
   
-    const toggleTheme = () => {
-      const isDark = document.body.classList.toggle("dark");
-      currentTheme = isDark ? "dark" : "light";
-      localStorage.setItem("theme", currentTheme);
+    const initTheme = () => {
+      if (currentTheme === 'dark') {
+        document.body.classList.add('dark');
+      }
+      updateButtonText();
     };
   
-    themeToggleButton.addEventListener("click", toggleTheme);
+    const toggleTheme = () => {
+      const isDark = document.body.classList.toggle('dark');
+      currentTheme = isDark ? 'dark' : 'light';
+      localStorage.setItem('theme', currentTheme);
+      updateButtonText();
+    };
+  
+    themeToggleButton.addEventListener('click', toggleTheme);
     initTheme();
   
     return {
@@ -52,14 +63,17 @@ const createThemeToggle = () => {
       toggle: toggleTheme,
     };
   };
+  
 
 /***
  * Utility function to create links in the navigation elements dynamically
  */
 const createNavLinks = (links) => {
-    const ullist = createElement('ul', {className: 'navbar-links',});
+    const ullist = createElement('ul', { className: 'navbar-links' });
   
-    links.forEach(({ text, href, 'aria-label': ariaLabel }) => {
+    links.forEach(({ text, href, 'aria-label': ariaLabel, submenu }) => {
+      const li = createElement('li', { className: submenu ? 'has-submenu' : '' });
+  
       const aElement = createElement('a', {
         href,
         'aria-label': ariaLabel,
@@ -67,13 +81,32 @@ const createNavLinks = (links) => {
         className: 'nav-link'
       });
   
-      const li = createElement('li');
       li.appendChild(aElement);
+  
+      if (submenu && Array.isArray(submenu)) {
+        const subUl = createElement('ul', { className: 'submenu' });
+  
+        submenu.forEach(({ text, href, 'aria-label': subLabel }) => {
+          const subLi = createElement('li');
+          const subA = createElement('a', {
+            href,
+            'aria-label': subLabel,
+            textContent: text,
+            className: 'nav-link'
+          });
+          subLi.appendChild(subA);
+          subUl.appendChild(subLi);
+        });
+  
+        li.appendChild(subUl);
+      }
+  
       ullist.appendChild(li);
     });
   
     return ullist;
   };
+  
   
 /***
  * Function to create and configure the navigation bar
@@ -94,7 +127,15 @@ const createNavbar = () => {
     const navLinks = [
         { text: 'Home', href: '#', 'aria-label': 'Home page' },
         { text: 'Cards', href: '#cards', 'aria-label': 'View cards' },
-        { text: 'About', href: '#about', 'aria-label': 'About this project' },
+        {
+          text: 'About \u25BC',
+          href: '#about',
+          'aria-label': 'About this project',
+          submenu: [
+            { text: 'Team', href: '#team', 'aria-label': 'Meet the team' },
+            { text: 'Vision', href: '#vision', 'aria-label': 'Our vision' }
+          ]
+        },
         { text: 'Contact', href: '#contact', 'aria-label': 'Contact information' }
       ];
     
@@ -149,7 +190,11 @@ const setupGridContainer = () => {
  * Counter with Closure
  */
 const createCounter = (count = 0) => {
-  const counterContainer = createElement('section', {ariaLabel: 'Selected Cards Counter'});
+  const counterContainer = createElement('section', {
+    ariaLabel: 'Selected Cards Counter',
+    role: 'status',
+    ariaLive: 'polite'
+});
   const counterElement = createElement('h3',{ id: 'selected-counter' },`Selected: ${count}`);
   counterContainer.appendChild(counterElement);
 
@@ -179,23 +224,19 @@ class Button {
     this.button = createElement('button', {
       textContent: text,
       style: `
-                background-color: ${
-                  type === 'primary'
-                    ? 'var(--color-primary)'
-                    : 'var(--color-success)'
-                };
-                border-radius: 8px;
-                border: none;
-                box-shadow: var(--shadow-light);
-                color: white;
-                cursor: pointer;
-                font-size: 14px;
-                font-weight: bold;
-                margin: 10px;
-                padding: 10px 15px;
-                text-transform: uppercase;
-                transition: all 0.3s ease-in-out;
-            `,
+        background-color: ${type === 'primary'? 'var(--color-primary)': 'var(--color-success)'};
+        border-radius: 8px;
+        border: none;
+        box-shadow: var(--shadow-light);
+        color: white;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        margin: 10px;
+        padding: 10px 15px;
+        text-transform: uppercase;
+        transition: all 0.3s ease-in-out;
+    `,
     });
 
     this.button.addEventListener('mouseover', () => {
@@ -321,8 +362,10 @@ class Card {
   }
 
   draw() {
-    const wrapper = createElement('div', {
+    const wrapper = createElement('article', {
       className: 'card',
+      role: 'listitem',
+      tabindex : '0',
       style: `
         align-items: center;
         background-color: var(--color-card-bg);
@@ -515,8 +558,8 @@ const setupLayout = (cardList, counter) => {
 
     
     const btnContainer = createElement('section', { style: 'margin: 20px;' });
-    const selectAllBtn = new Button('Select All', () => cardList.selectAll());
-    const deselectAllBtn = new Button('Deselect All',() => {cardList.deselectAll();},'secondary');
+    const selectAllBtn = new Button('Select All', () => cardList.selectAll(), null ,{ariaLabel : 'Select all Magic cards'});
+    const deselectAllBtn = new Button('Deselect All',() => {cardList.deselectAll();},'secondary' , {ariaLabel: 'Deselect all selected Magic cards'});
     
     btnContainer.appendChild(selectAllBtn.getElement());
     btnContainer.appendChild(deselectAllBtn.getElement());
