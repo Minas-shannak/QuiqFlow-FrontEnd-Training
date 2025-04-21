@@ -29,7 +29,7 @@ const createThemeToggle = () => {
       id: 'theme-toggle',
       className: 'theme-toggle-button',
       style: 'cursor: pointer;',
-      'aria-label': 'Toggle theme',
+      ariaLabel:'change the theme',
     });
   
     const updateButtonText = () => {
@@ -71,12 +71,12 @@ const createThemeToggle = () => {
 const createNavLinks = (links) => {
     const ullist = createElement('ul', { className: 'navbar-links' });
   
-    links.forEach(({ text, href, 'aria-label': ariaLabel, submenu }) => {
+    links.forEach(({ text, href, ariaLabel: ariaLabel, submenu }) => {
       const li = createElement('li', { className: submenu ? 'has-submenu' : '' });
   
       const aElement = createElement('a', {
         href,
-        'aria-label': ariaLabel,
+        ariaLabel: ariaLabel,
         textContent: text,
         className: 'nav-link'
       });
@@ -86,24 +86,27 @@ const createNavLinks = (links) => {
       if (submenu && Array.isArray(submenu)) {
         const subUl = createElement('ul', { className: 'submenu' });
   
-        submenu.forEach(({ text, href, 'aria-label': subLabel }) => {
+        submenu.forEach(({ text, href, ariaLabel: subLabel }) => {
           const subLi = createElement('li');
           const subA = createElement('a', {
             href,
-            'aria-label': subLabel,
+            ariaLabel: subLabel,
             textContent: text,
             className: 'nav-link'
           });
           subLi.appendChild(subA);
           subUl.appendChild(subLi);
+
         });
+
+        li.addEventListener('click' , ()=>{
+          subUl.classList.toggle('show');
+        })
   
         li.appendChild(subUl);
       }
-  
       ullist.appendChild(li);
     });
-  
     return ullist;
   };
   
@@ -113,30 +116,30 @@ const createNavLinks = (links) => {
  */
 const createNavbar = () => {
     const nav = createElement('nav', {
-      'aria-label': 'Main Navigation',
+      ariaLabel: 'Main Navigation',
       className: 'navbar'
     });
   
     const hamburger = createElement('div', {
       className: 'navbar-toggle',
-      'aria-label': 'Toggle navigation',
+      ariaLabel: 'Toggle navigation',
       'aria-expanded': 'false',
       innerHTML: '&#9776;'
     });
   
     const navLinks = [
-        { text: 'Home', href: '#', 'aria-label': 'Home page' },
-        { text: 'Cards', href: '#cards', 'aria-label': 'View cards' },
+        { text: 'Home', href: '#', ariaLabel: 'Home page' },
+        { text: 'Cards', href: '#cards', ariaLabel: 'View cards' },
         {
           text: 'About \u25BC',
           href: '#about',
-          'aria-label': 'About this project',
+          ariaLabel: 'About this project',
           submenu: [
-            { text: 'Team', href: '#team', 'aria-label': 'Meet the team' },
-            { text: 'Vision', href: '#vision', 'aria-label': 'Our vision' }
+            { text: 'Team', href: '#team', ariaLabel: 'Meet the team' },
+            { text: 'Vision', href: '#vision', ariaLabel: 'Our vision' }
           ]
         },
-        { text: 'Contact', href: '#contact', 'aria-label': 'Contact information' }
+        { text: 'Contact', href: '#contact', ariaLabel: 'Contact information' }
       ];
     
     const ul = createNavLinks(navLinks);
@@ -173,9 +176,10 @@ const createNavbar = () => {
  * Function to create and configure the grid container
  */
 const setupGridContainer = () => {
-  const container =document.getElementById('card-container') || createElement('section', { id: 'card-container' , ariaLabel : 'Card Grid' });
+  const container = document.getElementById('card-container') || createElement('section', { id: 'card-container' , ariaLabel : 'Card Grid' });
 
   container.innerHTML = '';
+
   Object.assign(container.style, {
     display: 'grid',
     gap: '10px',
@@ -324,7 +328,7 @@ const handleBtnCardClick = (card, wrapper, button, counter) => {
   wrapper.style.backgroundColor = card.isSelected? 'var(--color-card-selected)': 'var(--color-card-deselected)';
   button.setText(card.isSelected ? 'Deselect' : 'Select');
   button.setAttributes({
-      'aria-label': card.isSelected ? 'Deselect this card' : 'Select this card',
+      ariaLabel: card.isSelected ? 'Deselect this card' : 'Select this card',
       'aria-pressed': card.isSelected.toString()
   });
 
@@ -365,7 +369,7 @@ class Card {
     const wrapper = createElement('article', {
       className: 'card',
       role: 'listitem',
-      tabindex : '0',
+    //   tabindex :'0',
       style: `
         align-items: center;
         background-color: var(--color-card-bg);
@@ -455,7 +459,7 @@ class Card {
   
     showMoreButton.setAttributes({
       'aria-expanded': 'false',
-      'aria-label': 'Show more details about this card',
+      ariaLabel: 'Show more details about this card',
     });
   
     const selectButton = new Button('Select', () =>
@@ -463,7 +467,7 @@ class Card {
     );
 
     selectButton.setAttributes({
-      'aria-label': 'Select this card',
+      ariaLabel: 'Select this card',
       'aria-pressed': 'false',
     });
   
@@ -552,7 +556,7 @@ const setupLayout = (cardList, counter) => {
   const main = createElement('main', { ariaLabel: 'Main Content Area' });
   Object.assign(main.style, {
     textAlign: 'center',
-    margin: '20px',
+    margin: '85px 20px',
     boxSizing: 'border-box',
     });
 

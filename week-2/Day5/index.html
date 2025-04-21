@@ -20,7 +20,7 @@
         --color-primary: #007bff;
         --color-success: #28a745;
         --color-card-bg: white;
-        --color-card-selected: #d1ffd1;
+        --color-card-selected: #c6ffc6;
         --color-details-bg: #e3e3e3e6;
         --color-card-deselected: #fff;
         --shadow-light: 2px 2px 8px rgba(0, 0, 0, 0.1);
@@ -37,7 +37,7 @@
 
         --color-header-bg: #333;
         --color-card-bg: #222;
-        --color-card-selected: #333;
+        --color-card-selected: #505b50;
         --color-card-dark: #fff;
         --color-card-deselected: #222;
         --color-details-bg: #333333ee;
@@ -68,6 +68,9 @@
       /* Navigation bar */
 
       .navbar {
+        position: fixed;
+        z-index: 1;
+        top: 0;
         background-color: var(--color-header-bg);
         padding: 15px 20px;
         display: flex;
@@ -98,7 +101,7 @@
       }
 
       .navbar-links.open {
-        max-height: 500px;
+        max-height: 800px;
       }
 
       .navbar-links li {
@@ -126,16 +129,14 @@
 
       .submenu {
         display: none;
-        position: absolute;
-        background-color: var(--color-header-bg);
         list-style: none;
         margin: 0;
-        padding: 0;
-        top: 100%;
-        left: 0;
-        min-width: 150px;
-        box-shadow: var(--shadow-light);
-        z-index: 10;
+        padding-left: 20px;
+        background-color: var(--color-header-bg);
+      }
+
+      .submenu.show {
+        display: block;
       }
 
       .submenu li a {
@@ -145,7 +146,7 @@
         text-decoration: none;
       }
 
-      .has-submenu:hover .submenu {
+      .has-submenu .submenu.show {
         display: block;
       }
 
@@ -185,6 +186,18 @@
         .nav-link {
           padding: 10px;
           border-bottom: none;
+        }
+
+        .submenu {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          min-width: 150px;
+          box-shadow: var(--shadow-light);
+        }
+
+        .has-submenu:hover .submenu {
+          display: block;
         }
       }
     </style>
