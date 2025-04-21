@@ -1,6 +1,7 @@
-/* Given a SORTED array, find the index of an element
+/*
+Today's Problem – Binary Search Array
+ * Given a SORTED array, find the index of an element
  * using a binary search algorithm.
- *
  * Note that you can't just use indexOf. Your function must run in O(log(n)) time.
 */
 let arr=[1,2,3,4,5,6,7,8,9,10]
