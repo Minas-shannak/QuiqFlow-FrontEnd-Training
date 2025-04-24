@@ -31,6 +31,7 @@ export class AgDataGrid {
             ],
             defaultColDef: {
                 sortable: true,
+                editable: true,
             },
             pagination: true,
             rowSelection: {

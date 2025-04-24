@@ -1,4 +1,4 @@
-import { Button } from '../../components/atoms/Button/index.js';
+import { Button } from "../components/atoms/Button/index.js";
 
 /**
  * Utility function to create HTML elements dynamically
